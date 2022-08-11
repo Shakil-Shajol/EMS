@@ -2,6 +2,7 @@
 using EMS.Application.Common.Models;
 using EMS.Application.Interfaces;
 using EMS.Application.Queries.Departments;
+using EMS.Entities.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace EMS.Application.Handlers.Departments
         public async Task<ResponseDetail<List<DropDown>>> Handle(DepartmentDropdownListQuery request, CancellationToken cancellationToken)
         {
             var responseDetails = new ResponseDetail<List<DropDown>>();
-            var result = await _unitOfWork.DepartmentRepository.GetAll();
+            var result = await _unitOfWork.DepartmentRepository.GetAll<Department>();
             var dropdownList = result.Select(i => new DropDown()
             {
                 Value = i.Id,

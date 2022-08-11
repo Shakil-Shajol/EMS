@@ -25,18 +25,18 @@ namespace EMS.Data.DAL.Repositories
 
         #region Public Methods
 
-        public async Task<IEnumerable<Employee>> GetAll()
+        public async Task<IEnumerable<EmployeeReadDto>> GetAll<EmployeeReadDto>()
         {
             var sql = "GetEmployees";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = await connection.QueryAsync<Employee>(sql);
+                var result = await connection.QueryAsync<EmployeeReadDto>(sql);
                 return result.ToList();
             }
         }
 
-        public async Task<Employee?> GetById(int id)
+        public async Task<Employee?> GetById<Employee>(int id)
         {
             var sql = "GetEmployees";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))

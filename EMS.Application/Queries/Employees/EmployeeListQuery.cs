@@ -1,4 +1,5 @@
 ﻿using EMS.Application.Common.Models;
+using EMS.Entities.Dtos;
 using EMS.Entities.Entities;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Application.Queries.Employees
 {
-    public class EmployeeListQuery : IRequest<ResponseDetail<List<Employee>>>
+    public class EmployeeListQuery : IRequest<ResponseDetail<List<EmployeeReadDto>>>
     {
     }
 }

@@ -17,13 +17,8 @@ namespace EMS.Client.Controllers
             this._httpCallHandler = httpCallHandler;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var employee = new EmployeeDto() 
-            {
-                Id = 1002,EmployeeName = "Azman Mollah", DepartmentId = 2, JoinDate = DateTime.Parse("18-12-1993") 
-            };
-            var res = await _httpCallHandler.PostAsync("api/employee", employee);
             return View();
         }
 

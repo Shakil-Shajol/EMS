@@ -24,7 +24,7 @@ namespace EMS.Application.Handlers.Employees
         public async Task<ResponseDetail<List<Department>>> Handle(DepartmentListQuery request, CancellationToken cancellationToken)
         {
             var responseDetails = new ResponseDetail<List<Department>>();
-            var result = await _unitOfWork.DepartmentRepository.GetAll();
+            var result = await _unitOfWork.DepartmentRepository.GetAll<Department>();
             return responseDetails.SuccessResponse(result.ToList(), "Data Found Successfully");
         }
 

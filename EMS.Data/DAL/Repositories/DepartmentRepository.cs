@@ -20,7 +20,7 @@ namespace EMS.Data.DAL.Repositories
         {
             this.configuration = configuration;
         }
-        public async Task<IEnumerable<Department>> GetAll()
+        public async Task<IEnumerable<Department>> GetAll<Department>()
         {
             var sql = "GetDepartments";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
@@ -31,7 +31,7 @@ namespace EMS.Data.DAL.Repositories
             }
         }
 
-        public async Task<Department?> GetById(int id)
+        public async Task<Department?> GetById<Department>(int id)
         {
             var sql = "GetDepartments";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
