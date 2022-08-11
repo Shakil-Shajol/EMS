@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddServices();
 builder.Services.AddApplicationService();
 builder.Services.AddDataServices();
+builder.Services.AddCorsConfigurationService();
 
 var app = builder.Build();
 
@@ -26,5 +27,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAll");
 
 app.Run();

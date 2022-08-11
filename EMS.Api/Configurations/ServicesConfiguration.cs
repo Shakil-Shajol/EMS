@@ -1,4 +1,5 @@
-﻿using System.Text.Encodings.Web;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -21,6 +22,20 @@ namespace EMS.Api.Configurations
                 options.JsonSerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             });
             return services;
+        }
+
+        public static IServiceCollection AddCorsConfigurationService(this IServiceCollection services)
+        {
+            return services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", new CorsPolicyBuilder()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .SetIsOriginAllowed(origin => true)
+                    .AllowCredentials()
+                    .Build());
+            }
+            );
         }
     }
 }
