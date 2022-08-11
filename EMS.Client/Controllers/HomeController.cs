@@ -1,5 +1,6 @@
 ﻿using EMS.Client.Helpers;
 using EMS.Client.Models;
+using EMS.Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,7 +19,10 @@ namespace EMS.Client.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var employee = new { EmployeeName = "Azman Mollah", DepartmentId = 2, JoinDate = "18-12-1993" };
+            var employee = new EmployeeDto() 
+            {
+                Id = 1002,EmployeeName = "Azman Mollah", DepartmentId = 2, JoinDate = DateTime.Parse("18-12-1993") 
+            };
             var res = await _httpCallHandler.PostAsync("api/employee", employee);
             return View();
         }
