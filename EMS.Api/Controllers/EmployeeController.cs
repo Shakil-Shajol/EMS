@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EMS.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/employee")]
     [ApiController]
     public class EmployeeController : BaseController
     {

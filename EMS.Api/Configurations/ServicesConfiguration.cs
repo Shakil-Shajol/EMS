@@ -11,7 +11,7 @@ namespace EMS.Api.Configurations
         {
             services.AddMvc().AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString;
+                options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString;
                 options.JsonSerializerOptions.AllowTrailingCommas = true;
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
