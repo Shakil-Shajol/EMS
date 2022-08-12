@@ -2,54 +2,49 @@
 using EMS.Application.Interfaces;
 using EMS.Entities.Entities;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EMS.Data.DAL.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
-        #region Private Fields
-
         private readonly IConfiguration configuration;
 
-        #endregion Private Fields
-
-        #region Public Constructors
-
-        public EmployeeRepository(IConfiguration configuration)
+        public DepartmentRepository(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
-        #endregion Public Constructors
-
-        #region Public Methods
-
-        public async Task<IEnumerable<EmployeeReadDto>> GetAll<EmployeeReadDto>()
+        public async Task<IEnumerable<Department>> GetAll<Department>()
         {
-            var sql = "GetEmployees";
+            var sql = "GetDepartments";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = await connection.QueryAsync<EmployeeReadDto>(sql);
+                var result = await connection.QueryAsync<Department>(sql);
                 return result.ToList();
             }
         }
 
-        public async Task<Employee?> GetById<Employee>(int id)
+        public async Task<Department?> GetById<Department>(int id)
         {
-            var sql = "GetEmployees";
+            var sql = "GetDepartments";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = await connection.QueryFirstOrDefaultAsync<Employee>(sql, new { Id = id }, commandType: CommandType.StoredProcedure);
+                var result = await connection.QueryFirstOrDefaultAsync<Department>(sql, new { Id = id }, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
         public async Task<int> Remove(int id)
         {
-            var sql = "DeleteEmployees";
+            var sql = "DeleteDepartments";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
@@ -58,18 +53,16 @@ namespace EMS.Data.DAL.Repositories
             }
         }
 
-        public async Task<int> Update(Employee entity)
+        public async Task<int> Update(Department entity)
         {
-            var sql = "CreateEmployee";
+            var sql = "CreateDepartment";
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var parameters = new { entity.Id, entity.EmployeeName, entity.JoinDate, entity.DepartmentId, entity.MakeBy, entity.UpdatedBy };
+                var parameters = new { entity.Id, entity.DepartmentName, entity.MakeBy, entity.UpdatedBy };
                 var result = await connection.ExecuteAsync(sql, parameters, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
-
-        #endregion Public Methods
     }
 }

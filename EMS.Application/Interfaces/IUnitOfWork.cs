@@ -9,6 +9,7 @@ namespace EMS.Application.Interfaces
     public interface IUnitOfWork
     {
         IEmployeeRepository EmployeeRepository { get; }
+        IDepartmentRepository DepartmentRepository { get; }
 
         Task<int> CommitAsync(CancellationToken cancellationToken);
     }

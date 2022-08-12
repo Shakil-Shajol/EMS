@@ -16,6 +16,7 @@ namespace EMS.Data
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             return services;
         }
     }

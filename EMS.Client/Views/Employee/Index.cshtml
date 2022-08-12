@@ -1,0 +1,123 @@
+﻿@model ResponseDetail<List<EmployeeReadDto>>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Employee List</h3>
+        </div>
+        <div class="col-md-6" style="text-align: right;">
+            <button type="button" class="btn btn-outline-primary btn-block" onclick="openModal(0)">
+                Add
+            </button>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Join Date</th>
+                <th>Department</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>@item.EmployeeName</td>
+                    <td>@item.JoinDate.ToString("dd-MMM-yyyy")</td>
+                    <td>@item.DepartmentName</td>
+                    <td  style="text-align: right;">
+                        <button type="button" class="btn btn-outline-primary ml-auto" onclick="openModal(@item.Id)">
+                            Edit
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="employeeModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Employee</h5>
+                <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="Create" asp-controller="Employee" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="EmployeeName">Name</label>
+                        <input type="hidden" name="Id" id="EmployeeId">
+                        <input type="text" class="form-control" name="EmployeeName" id="EmployeeName" placeholder="Employee Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="JoinDate">Join Date</label>
+                        <input type="text" class="form-control" name="JoinDate" id="JoinDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="DepartmentId">Another label</label>
+                        <select class="form-control" name="DepartmentId" id="DepartmentId">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-primary">Save changes</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="closeModal()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function openModal(id) {
+        getApi('Department/DropDown',
+            (res) => {
+                $('#DepartmentId').empty();
+                $('#DepartmentId').append('<option>Select</option>');
+
+                $.each(res, function(index, value) {
+                    let d = '<option value=' + value.value + '>' + value.text + '</option>';
+                    $('#DepartmentId').append(d);
+                });
+            },
+            (err) => {
+
+            });
+
+        $('#EmployeeId').val(id);
+        if (id > 0) {
+            getApi('employee/getbyid/' + id,
+                (res) => {
+                    let employee = res[`data`];
+                    $('#EmployeeName').val(employee.employeeName);
+                    $('#JoinDate').val(convertDate(employee.joinDate));
+                    $('#DepartmentId').val(employee.departmentId);
+                    $('#modal-title').text('Edit Employee');
+                    $('#employeeModal').modal('show');
+                },
+                (err) => { });
+        } else {
+            $('#EmployeeName').val('');
+            $('#JoinDate').val(convertDate(new Date));
+            $('#modal-title').text('Add Employee');
+            $('#employeeModal').modal('show');
+        }
+    }
+
+    function closeModal() {
+        $('#employeeModal').modal('hide');
+    }
+
+
+</script>
+

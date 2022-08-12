@@ -1,7 +1,10 @@
+using EMS.Client.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<HttpCallHandler>();
 
 var app = builder.Build();
 

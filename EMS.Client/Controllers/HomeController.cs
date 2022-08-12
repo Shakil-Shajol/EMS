@@ -1,5 +1,6 @@
 ﻿using EMS.Client.Helpers;
 using EMS.Client.Models;
+using EMS.Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -16,10 +17,8 @@ namespace EMS.Client.Controllers
             this._httpCallHandler = httpCallHandler;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var employee = new { EmployeeName = "Azman Mollah", DepartmentId = 2, JoinDate = "18-12-1993" };
-            var res = await _httpCallHandler.PostAsync("api/employee", employee);
             return View();
         }
 
